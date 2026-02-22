@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>POTATOROAD.LT | Starch-Wave Edition</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700;800&family=Playfair+Display:ital@1&display=swap" rel="stylesheet">
+</head>
+<body>
+    
+    <!-- Background layers -->
+    <div class="background-container" id="bg-container">
+        <!-- The true color image -->
+        <div class="bg-image bg-color" id="bg-color"></div>
+        <!-- The dithered/b&w image on top -->
+        <div class="bg-image bg-dirt" id="bg-dirt"></div>
+    </div>
+
+    <!-- Scanline Overlay -->
+    <div class="scanlines"></div>
+
+    <!-- Marquee Ticker (Top/Bottom) -->
+    <div class="marquee-container top">
+        <div class="marquee-text" id="marquee-top">
+            <!-- Populated by JS -->
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="hero-container" id="hero">
+        <div class="system-status glitch" data-text="[ SYSTEM STATUS: ROOTED ]">
+            [ SYSTEM STATUS: ROOTED ]
+        </div>
+        
+        <h1 class="domain-title glitch" data-text="POTATOROAD.LT">POTATOROAD.LT</h1>
+        
+        <p class="subtitle pulse">
+            "Every great journey begins beneath the surface."
+        </p>
+    </main>
+
+    <!-- Hidden Terminal -->
+    <div id="secret-terminal" class="hidden">
+        <div class="terminal-header">Terminal Access</div>
+        <div class="terminal-body" id="terminal-body">
+            <div>> _</div>
+        </div>
+        <input type="text" id="terminal-input" autocomplete="off" spellcheck="false">
+    </div>
+
+    <!-- Custom Terminal Popup (Harvest Click) -->
+    <div id="harvest-popup" class="hidden terminal-popup">
+        <div class="terminal-header">System Alert</div>
+        <div class="terminal-body">
+            <p>> [ERROR] ENCRYPTION REQUIRED.</p>
+            <p>> [STATUS] TWO SOULS DETECTED.</p>
+            <p>> [PATH] POTATO ROAD CONTINUES...</p>
+        </div>
+        <button id="close-harvest-popup">[X] CLOSE</button>
+    </div>
+
+    <!-- Profound Ending (Footer) -->
+    <footer class="profound-footer">
+        <div class="golden-potato-container">
+            <img src="assets/golden_potato.png" alt="Golden Potato" class="golden-potato">
+            <div class="profound-text">
+                "The humblest tuber feeds the world. The simplest road leads to home."
+            </div>
+        </div>
+    </footer>
+
+    <!-- Matrix Rain Canvas -->
+    <canvas id="potato-matrix"></canvas>
+
+    <script src="script.js"></script>
+</body>
+</html>

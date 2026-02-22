@@ -1,0 +1,446 @@
+:root {
+    --crt-green: #00FF41;
+    --dark-bg: #080808;
+    --dirt-brown: #3E2723;
+    --font-mono: 'JetBrains Mono', monospace;
+    --font-serif: 'Playfair Display', serif;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body,
+html {
+    width: 100%;
+    height: 100%;
+    /* Remove completely solid background to allow background-container to show through */
+    background-color: transparent;
+    color: var(--crt-green);
+    font-family: var(--font-mono);
+    overflow-x: hidden;
+    cursor: crosshair;
+    /* "Dirt" Cursor */
+}
+
+/* --- Background Layers --- */
+.background-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -2;
+    overflow: hidden;
+    background-color: var(--dark-bg);
+    /* Put the dark bg here behind the images */
+}
+
+.bg-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('assets/potato_road.png');
+    background-size: cover;
+    background-position: center bottom;
+    background-repeat: no-repeat;
+    transition: clip-path 0.1s ease-out;
+}
+
+/* The true color layer */
+.bg-color {
+    z-index: 1;
+    filter: brightness(0.8) contrast(1.2) sepia(0.2) hue-rotate(-10deg);
+}
+
+/* The B&W/Dirt layer */
+.bg-dirt {
+    z-index: 2;
+    /* Dither / B&W / Grainy simulation */
+    filter: grayscale(100%) contrast(150%) brightness(0.6) sepia(0.5) hue-rotate(30deg);
+    /* Clip path will be updated by JS for the dirt cursor */
+    clip-path: circle(100% at 50% 50%);
+}
+
+/* Scanlines Effect & RGB Split Edges */
+.scanlines {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -1;
+    background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+    background-size: 100% 4px, 100% 100%;
+    pointer-events: none;
+    box-shadow: inset 0 0 100px rgba(0, 255, 65, 0.1);
+    /* Subtle green vignette */
+}
+
+/* --- Hero Section --- */
+.hero-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    text-align: center;
+    padding: 2rem;
+    position: relative;
+    z-index: 10;
+}
+
+.system-status {
+    border: 2px solid var(--crt-green);
+    padding: 0.5rem 1rem;
+    font-size: 1.5rem;
+    font-weight: bold;
+    letter-spacing: 2px;
+    margin-bottom: 2rem;
+    box-shadow: 0 0 15px var(--crt-green), inset 0 0 10px var(--crt-green);
+    text-shadow: 0 0 5px var(--crt-green);
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+.domain-title {
+    font-size: 4rem;
+    font-weight: 800;
+    letter-spacing: 5px;
+    margin-bottom: 1.5rem;
+    text-shadow: 0 0 10px var(--crt-green);
+    position: relative;
+}
+
+.subtitle {
+    font-family: var(--font-serif);
+    font-size: 1.2rem;
+    color: #e0e0e0;
+    /* Slightly off-white for contrast */
+    font-style: italic;
+    max-width: 600px;
+    text-shadow: 0 0 8px rgba(255, 255, 255, 0.5);
+}
+
+.pulse {
+    animation: heartbeat 3s infinite alternate;
+}
+
+@keyframes heartbeat {
+    0% {
+        opacity: 0.7;
+        text-shadow: 0 0 4px rgba(0, 255, 65, 0.4);
+    }
+
+    100% {
+        opacity: 1;
+        text-shadow: 0 0 15px rgba(0, 255, 65, 0.9);
+    }
+}
+
+/* Glitch Effect */
+.glitch {
+    position: relative;
+}
+
+.glitch::before,
+.glitch::after {
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: transparent;
+}
+
+.glitch::before {
+    left: 2px;
+    text-shadow: -2px 0 red;
+    clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
+    animation: glitch-anim 5s infinite linear alternate-reverse;
+}
+
+.glitch::after {
+    left: -2px;
+    text-shadow: -2px 0 blue;
+    clip-path: polygon(0 80%, 100% 20%, 100% 100%, 0 100%);
+    animation: glitch-anim2 7s infinite linear alternate-reverse;
+}
+
+@keyframes glitch-anim {
+    0% {
+        clip-path: polygon(0 2%, 100% 2%, 100% 5%, 0 5%);
+        transform: translate(0);
+    }
+
+    2% {
+        clip-path: polygon(0 15%, 100% 15%, 100% 15%, 0 15%);
+        transform: translate(-2px, 2px);
+    }
+
+    4% {
+        clip-path: polygon(0 10%, 100% 10%, 100% 20%, 0 20%);
+        transform: translate(2px, -2px);
+    }
+
+    6% {
+        clip-path: polygon(0 80%, 100% 80%, 100% 80%, 0 80%);
+        transform: translate(0);
+    }
+
+    100% {
+        clip-path: polygon(0 0, 0 0, 0 0, 0 0);
+        transform: translate(0);
+    }
+}
+
+@keyframes glitch-anim2 {
+    0% {
+        clip-path: polygon(0 25%, 100% 25%, 100% 30%, 0 30%);
+        transform: translate(0);
+    }
+
+    3% {
+        clip-path: polygon(0 3%, 100% 3%, 100% 3%, 0 3%);
+        transform: translate(2px, -2px);
+    }
+
+    5% {
+        clip-path: polygon(0 60%, 100% 60%, 100% 65%, 0 65%);
+        transform: translate(-2px, 2px);
+    }
+
+    7% {
+        clip-path: polygon(0 20%, 100% 20%, 100% 20%, 0 20%);
+        transform: translate(0);
+    }
+
+    100% {
+        clip-path: polygon(0 0, 0 0, 0 0, 0 0);
+        transform: translate(0);
+    }
+}
+
+/* --- Marquee --- */
+.marquee-container {
+    width: 100%;
+    background-color: var(--dirt-brown);
+    color: var(--crt-green);
+    overflow: hidden;
+    white-space: nowrap;
+    position: fixed;
+    z-index: 50;
+    border-bottom: 2px solid var(--crt-green);
+    padding: 5px 0;
+    box-shadow: 0 0 10px rgba(0, 255, 65, 0.4);
+}
+
+.marquee-container.top {
+    top: 0;
+}
+
+.marquee-text {
+    display: inline-block;
+    padding-left: 100%;
+    /* Start offscreen right */
+    animation: marquee 30s linear infinite;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.marquee-text span {
+    margin-right: 50px;
+    /* Space between facts */
+}
+
+@keyframes marquee {
+    0% {
+        transform: translate(0, 0);
+    }
+
+    100% {
+        transform: translate(-100%, 0);
+    }
+}
+
+/* --- Golden Potato Footer --- */
+.profound-footer {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    z-index: 5;
+    padding: 5rem 0;
+}
+
+.golden-potato-container {
+    position: relative;
+    text-align: center;
+    cursor: pointer;
+}
+
+.golden-potato {
+    width: 300px;
+    filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.4));
+    transition: filter 0.5s, transform 0.5s;
+}
+
+.golden-potato:hover {
+    filter: drop-shadow(0 0 50px rgba(255, 215, 0, 0.8)) brightness(1.2);
+    transform: scale(1.05);
+}
+
+.profound-text {
+    position: absolute;
+    bottom: -40px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: max-content;
+    color: #FFD700;
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 1.2rem;
+    opacity: 0;
+    transition: opacity 0.5s 0.2s, transform 0.5s 0.2s;
+    text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+    pointer-events: none;
+}
+
+.golden-potato-container:hover .profound-text {
+    opacity: 1;
+    transform: translateX(-50%) translateY(10px);
+}
+
+/* --- Terminals & Popups --- */
+.hidden {
+    display: none !important;
+}
+
+.terminal-popup,
+#secret-terminal {
+    position: fixed;
+    background-color: rgba(8, 8, 8, 0.95);
+    border: 2px solid var(--crt-green);
+    box-shadow: 0 0 20px rgba(0, 255, 65, 0.5);
+    z-index: 100;
+    font-family: var(--font-mono);
+    color: var(--crt-green);
+}
+
+.terminal-header {
+    background-color: var(--crt-green);
+    color: var(--dark-bg);
+    padding: 5px 10px;
+    font-weight: bold;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+}
+
+/* Custom Terminal Popup */
+#harvest-popup {
+    bottom: 20px;
+    right: 20px;
+    width: 350px;
+}
+
+#harvest-popup .terminal-body {
+    padding: 15px;
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+
+#close-harvest-popup {
+    background: transparent;
+    border: none;
+    color: var(--crt-green);
+    font-family: inherit;
+    font-size: 0.8rem;
+    padding: 10px;
+    cursor: pointer;
+    width: 100%;
+    text-align: right;
+}
+
+#close-harvest-popup:hover {
+    background-color: rgba(0, 255, 65, 0.2);
+}
+
+/* Secret Terminal (Backtick) */
+#secret-terminal {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 600px;
+    height: 400px;
+    display: flex;
+    flex-direction: column;
+}
+
+#secret-terminal .terminal-body {
+    flex-grow: 1;
+    padding: 15px;
+    overflow-y: auto;
+    font-size: 1.1rem;
+    line-height: 1.4;
+}
+
+#terminal-input {
+    background: transparent;
+    border: none;
+    border-top: 1px solid var(--crt-green);
+    color: var(--crt-green);
+    font-family: inherit;
+    font-size: 1.1rem;
+    padding: 15px;
+    outline: none;
+}
+
+/* --- Easter Eggs Logic Styles --- */
+/* Konami Code inversion */
+.upside-down {
+    transform: rotate(180deg);
+    transition: transform 1s ease-in-out;
+}
+
+/* Matrix Rain Canvas */
+#potato-matrix {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 90;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 1s;
+}
+
+#potato-matrix.active {
+    opacity: 1;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .domain-title {
+        font-size: 2.5rem;
+    }
+
+    .system-status {
+        font-size: 1rem;
+    }
+
+    .subtitle {
+        font-size: 1rem;
+        padding: 0 1rem;
+    }
+
+    #secret-terminal {
+        width: 90%;
+    }
+}
