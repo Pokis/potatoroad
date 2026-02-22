@@ -46,7 +46,7 @@ html {
     height: 100%;
     background-image: url('assets/potato_road.png');
     background-size: cover;
-    background-position: center bottom;
+    background-position: center center;
     background-repeat: no-repeat;
     transition: clip-path 0.1s ease-out;
 }
