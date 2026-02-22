@@ -1,11 +1,18 @@
-// 1. The "Starch-Facts" Ticker
 const facts = [
     "Fact 042: Potatoes were the first vegetable grown in space (1995).",
     "Fact 808: There are over 4,000 varieties of native potatoes.",
     "Fact 101: A potato has more chromosomes than a human (48 vs 46).",
     "Fact 007: The Incas used potatoes to treat injuries and predict the weather.",
     "Fact 314: The word 'potato' comes from the Spanish word 'patata'.",
-    "Fact 404: French fries were actually introduced to America by Thomas Jefferson."
+    "Fact 404: French fries were actually introduced to America by Thomas Jefferson.",
+    "Fact 512: The largest potato ever grown weighed 10 pounds 14 ounces.",
+    "Fact 777: Potatoes are 80% water and 20% solid matter.",
+    "Fact 999: In October 1995, the potato was designated the official vegetable of Idaho.",
+    "Fact 123: The Great Famine in Ireland (1845-1852) was caused by a potato blight.",
+    "Fact 256: Vincent van Gogh painted 'The Potato Eaters' in 1885.",
+    "Fact 666: Green potatoes contain high levels of solanine and should not be eaten.",
+    "Fact 111: China is the world's largest producer of potatoes.",
+    "Fact 333: Potato blossoms used to be a royal fashion accessory in France."
 ];
 
 function initMarquee() {
